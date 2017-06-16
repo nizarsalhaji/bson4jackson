@@ -34,7 +34,7 @@ public class BsonModule extends Module {
 
 	@Override
 	public Version version() {
-		return new Version(2, 7, 0, "", "org.litote", "bson4jackson");
+		return new Version(2, 7, 0, "", "org.litote", "bson4jackson-fork");
 	}
 
 	@Override
