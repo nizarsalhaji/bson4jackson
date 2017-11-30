@@ -44,6 +44,7 @@ import org.litote.bson4jackson.io.CountingInputStream;
 import org.litote.bson4jackson.io.LittleEndianInputStream;
 import org.litote.bson4jackson.io.StaticBufferedInputStream;
 import org.litote.bson4jackson.io.UnsafeByteArrayInputStream;
+import org.litote.bson4jackson.types.Decimal128;
 import org.litote.bson4jackson.types.JavaScript;
 import org.litote.bson4jackson.types.ObjectId;
 import org.litote.bson4jackson.types.Symbol;
@@ -365,6 +366,13 @@ public class BsonParser extends ParserBase {
 				case BsonConstants.TYPE_INT64:
 					ctx.value = _in.readLong();
 					_currToken = JsonToken.VALUE_NUMBER_INT;
+					break;
+
+				case BsonConstants.TYPE_DECIMAL128:
+					long low = _in.readLong();
+					long high = _in.readLong();
+					ctx.value = Decimal128.fromIEEE754BIDEncoding(high, low);
+					_currToken = JsonToken.VALUE_EMBEDDED_OBJECT;
 					break;
 					
 				case BsonConstants.TYPE_MINKEY:
